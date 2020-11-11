@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<style type="text/css">
+			td {
+				padding: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<table border="1" id="mytable">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>id</th>
+					<th>名称</th>
+					<th>号码</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr id="item">
+					<td><span class="xh" name="a[1].d">1</span></td>
+					<td><span class="id" name="a[1].a">1</span></td>
+					<td><span class="name" name="a[1].c">张三</span>
+						<input type="hidden" class="xh" name="" id="" value="1" /></td>
+					<td><span class="number" name="a[1].b">191819819</span></td>
+					<td><button type="button" class="addBtn">复制</button></td>
+				</tr>
+				<tr>
+					<td><span class="xh" name="a[2].d">2</span></td>
+					<td><span class="id" name="a[2].a">2</span></td>
+					<td><span class="name" name="a[2].c">张三</span>
+						<input type="hidden" class="xh" name="" id="" value="2" /></td>
+					<td><span class="number" name="a[2].b">191819819</span></td>
+					<td><button type="button" class="addBtn">复制</button></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</body>
+	<script type="text/javascript">
+		// function clone(that){
+		// 	// $('.addBtn').on('click',function(){
+		// 		console.log(that.parents('tr').get(0))
+
+
+
+		// 		for (var i = 0; i < 1; i++)
+		// 		{
+		// 			var node = that.parents('tr').get(0).cloneNode(true);
+		// 			// node.id = "item_" + (i + 1);
+		// 			that.parents('tr').get(0).parentNode.appendChild(node);
+		// 		}
+		// 	// })
+
+		// }
+		function clone() {
+			$(document).on('click', '.addBtn', function() {
+
+				console.log($(this).parents('tr').get(0))
+				console.log($(this).parents('tbody').find('tr').length)
+				var a = $(this).parents('tbody').find('tr').length + 1
+
+				for (var i = 0; i < 1; i++) {
+					var node = $(this).parents('tr').get(0).cloneNode(true);
+
+					$(node).find('td').each(function() {
+						if ($(this).find('span').attr('name')) {
+							var nu = $(this).find('span').attr('name').split('[')[0]
+							var key = $(this).find('span').attr('name').split('.')[1]
+							$(this).find('span').attr('name', nu + '[' + a + '].' + key)
+						}
+
+					})
+					$(this).parents('tr').after(node);
+					console.log($(this).parents('tr').find('.xh').val())
+
+
+				}
+			getList('mytable');
+			})
+
+		}
+		clone();
+		$(function() {
+			// var a = $('#mytable').rows.length;
+
+		})
+
+		function getList(tableID) {
+			var milasUrl = {}; //新建对象，用来存储所有数据
+			var subMilasUrlArr = {}; //存储每一行数据
+			var a = {}; //存储每一行的name
+			var b = {};
+			var c = {}
+			var tableData = {};
+			var tableList= []
+			$("#" + tableID + " tbody tr").each(function(trindex, tritem) { //遍历每一行
+				tableData[trindex] = new Array();
+				a[trindex] = new Array();
+				$(tritem).find("span").each(function(tdindex, tditem) {
+					a[trindex][tdindex] = $(tditem).attr('class');
+					tableData[trindex][tdindex] = $(tditem).text(); //遍历每一个数据，并存入
+					subMilasUrlArr[trindex] = tableData[trindex]; //将每一行的数据存入
+					b[trindex] = a[trindex]
+				});
+			});
+			for (var key in a) {
+				c[key] = b[key]; //将每一行存入对象
+			}
+			
+			for (var key in subMilasUrlArr) {
+				milasUrl[key] = subMilasUrlArr[key]; //将每一行存入对象
+				
+			}
+			for(let j = 0;j<$("#" + tableID + " tbody tr").length;j++){
+				let obj = {}
+				for(let i = 0;i < milasUrl[j].length;i++) {
+					obj[c[j][i]] = milasUrl[j][i];
+				}
+				console.log(obj)
+				tableList.push(obj)
+			}
+			
+			
+			console.log(tableList)
+			
+			// console.log(c)
+			// console.log(milasUrl)
+			return milasUrl;
+		}
+		
+		list: [{
+			id: '1',
+			name: '张三'
+		}, {
+			id: '1',
+			name: '张三'
+		}]
+	</script>
+</html>

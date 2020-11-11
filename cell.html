@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	 <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title></title>
+
+    <script type="text/javascript">
+        //code from NC01 http://forums.asp.net/t/1395561.aspx
+        function getTableColumnValue(tableId, rowNumber, columnNumber) {
+            var tableRef = document.getElementById(tableId);
+
+            var elementRef = tableRef.rows[rowNumber].cells[columnNumber];
+            var elementValue = '';
+
+            if (elementRef.textContent) {
+                // Firefox
+                elementValue = elementRef.textContent;
+            }
+            else if (elementRef.innerText) {
+                // IE
+                elementValue = elementRef.innerText;
+            }
+            else {
+                // Default
+                elementValue = elementRef.innerHTML;
+                var regExp = /<\/?[^>]+>/gi;
+
+                elementValue = elementValue.replace(regExp, '');
+            }
+
+            //alert(elementValue);
+
+            return elementValue;
+        }
+    </script>
+
+</head>
+<body>
+    <table border="1" id="myTable">
+        <tr>
+            <td>
+                aa
+            </td>
+            <td>
+                bb
+            </td>
+            <td>
+                cc
+            </td>
+        </tr>
+        <tr>
+            <td>
+                dd
+            </td>
+            <td>
+                ee
+            </td>
+            <td>
+                ff
+            </td>
+        </tr>
+        <tr>
+            <td>
+                gg
+            </td>
+            <td>
+                hh
+            </td>
+            <td>
+                ii
+            </td>
+        </tr>
+    </table>
+    <input type="button" value="click" onclick="this.value=getTableColumnValue('mytable',1, 2);">
+</body>
+</html>

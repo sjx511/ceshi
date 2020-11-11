@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<title></title>
+	</head>
+	<body>
+		<input onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
+		<input name=txt1 onchange="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}">
+		
+		
+		<input type=text t_value="" o_value="" onkeypress="if(!this.value.match(/^[\+\-]?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?)?$/))this.o_value=this.value"
+												 onkeyup="if(!this.value.match(/^[\+\-]?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?)?$/))this.o_value=this.value" 
+												 onblur="if(!this.value.match(/^(?:[\+\-]?\d+(?:\.\d+)?|\.\d*?)?$/))this.value=this.o_value;else{if(this.value.match(/^\.\d+$/))this.value=0+this.value;if(this.value.match(/^\.$/))this.value=0;this.o_value=this.value}">
+	<input type="text" name="" id="numb" value="" onkeyup="unsignFloat($(this),2)"/>
+	</body>
+	<script>
+		function unsignFloat(obj, pointNum) {
+			var pointNum = pointNum || 2;
+			var value = obj.val();
+			console.log(value)
+			value = value.replace(/[^\d.]/g, ""); //先把非数字的都替换掉，除了数字和.
+			value = value.replace(/^\./g, ""); //必须保证第一个为数字而不是.
+			value = value.replace(/\.{2,}/g, "."); //保证只有出现一个.而没有多个.
+			value = value.replace(".","$#$").replace(/\./g, "").replace("$#$", "."); 
+			
+			var reg = new RegExp("^(\\-)*(\\d+)\\.(\\d{"+pointNum+"}).*$");
+			value = value.replace(reg,'$1$2.$3');
+			obj.val(value);
+			
+		}
+		
+	</script>
+</html>

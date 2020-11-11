@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<title></title>
+	</head>
+	<body>
+		<video id="video" width="500" height="500"></video>
+			<canvas id="canvas" width="500" height="500"></canvas>
+			<script type="text/javascript">
+				//用来匹配不同的浏览器
+						function getUserMedia(constraints,success,error){
+							if(navigator.mediaDevices.getUserMedia){
+								navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+							}else if (navigator.webkitGetUserMedia) {
+								navigator.webkitGetUserMedia(constraints,success,error);
+							}else if (navigator.mozGetUserMedia) {
+								navigator.mozGetUserMedia(constraints,success,error);
+							}else if (navigator.getUserMedia) {
+								navigator.getUserMedia(constraints,success,error)
+							}
+						}
+						
+						let video = document.getElementById('video');
+						let canvas = document.getElementById('canvas');
+						let context = canvas.getContext('2d');
+						//成功回调
+						function success(stream){
+							video.srcObject = stream;
+							video.play();
+						}
+						//失败回调
+						function error(error) {
+							console.log("访问用户媒体失败");
+						}
+						//开启摄像头
+						if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+							getUserMedia({video:{width:500,height:500}},success,error)
+						}else {
+							alert("不支持");
+						}
+						//实现拍照的功能
+						document.getElementById('snap').addEventListener('click',function(){
+							context.drawImage(video,0,0,500,500);
+						});
+			</script>
+	</body>
+</html>

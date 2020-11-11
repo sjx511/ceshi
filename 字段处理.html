@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-1.9.1.min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var data = [{
+					id: 1,
+					typeId: 1,
+					typeName: "建筑招工",
+					skillsId: 1,
+					skillsName: "通用工种"
+				}, {
+					id: 2,
+					typeId: 1,
+					typeName: "建筑招工",
+					skillsId: 2,
+					skillsName: "路/桥/隧道"
+				}, {
+					id: 3,
+					typeId: 1,
+					typeName: "建筑招工",
+					skillsId: 3,
+					skillsName: "桩基础"
+				}, {
+					id: 4,
+					typeId: 1,
+					typeName: "建筑招工",
+					skillsId: 4,
+					skillsName: "防护工程"
+				}, {
+					id: 5,
+					typeId: 1,
+					typeName: "建筑招工",
+					skillsId: 5,
+					skillsName: "市政园林"
+				}, {
+					id: 6,
+					typeId: 1,
+					typeName: "建筑招工",
+					skillsId: 6,
+					skillsName: "焊工"
+				}, {
+					id: 7,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 7,
+					skillsName: "装修木工/工厂木工/吊顶"
+				}, {
+					id: 8,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 8,
+					skillsName: "电工点/消防/水暖"
+				}, {
+					id: 9,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 9,
+					skillsName: "泥工/抹灰/砌砖/瓦工/贴砖"
+				}, {
+					id: 10,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 10,
+					skillsName: "油漆/涂料/腻子/大白"
+				}, {
+					id: 11,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 11,
+					skillsName: "幕墙工/玻璃/门窗/干挂理石"
+				}, {
+					id: 12,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 12,
+					skillsName: "空调/管道/通风/空调保暖"
+				}, {
+					id: 13,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 13,
+					skillsName: "防水"
+				}, {
+					id: 14,
+					typeId: 2,
+					typeName: "装修招工",
+					skillsId: 14,
+					skillsName: "小工/力工/普工/兼职/保安"
+				}, {
+					id: 15,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 15,
+					skillsName: "电梯司机/安装/维修"
+				}, {
+					id: 16,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 16,
+					skillsName: "渣车/货车/挂车司机"
+				}, {
+					id: 17,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 17,
+					skillsName: "挖机/钩机/维修"
+				}, {
+					id: 18,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 18,
+					skillsName: "铲车/叉车/装载机"
+				}, {
+					id: 19,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 19,
+					skillsName: "推土机司机"
+				}, {
+					id: 20,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 20,
+					skillsName: "搅拌罐车/泵车实际"
+				}, {
+					id: 21,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 21,
+					skillsName: "压路机/摊铺机"
+				}, {
+					id: 22,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 22,
+					skillsName: "打桩机/架桥机"
+				}, {
+					id: 23,
+					typeId: 3,
+					typeName: "司机招工",
+					skillsId: 23,
+					skillsName: "其它司机"
+				}, {
+					id: 24,
+					typeId: 4,
+					typeName: "管理施工",
+					skillsId: 24,
+					skillsName: "施工员"
+				}, {
+					id: 25,
+					typeId: 4,
+					typeName: "管理施工",
+					skillsId: 25,
+					skillsName: "安全员"
+				}, {
+					id: 26,
+					typeId: 4,
+					typeName: "管理施工",
+					skillsId: 26,
+					skillsName: "材料员/资料员/投标员"
+				}
+
+			]
+
+			function jsonUntil(arr) {
+				var map = {},
+					dest = [];
+				for (var i = 0; i < arr.length; i++) {
+					var ai = arr[i];
+					if (!map[ai.typeId]) {
+						dest.push({
+							typeId: ai.typeId,
+							typeName: ai.typeName,
+							child: [ai]
+						});
+						map[ai.typeId] = ai;
+					} else {
+						for (var j = 0; j < dest.length; j++) {
+							var dj = dest[j];
+							if (dj.typeId == ai.typeId) {
+								dj.child.push(ai);
+								break;
+							}
+						}
+					}
+				}
+				console.log(dest)
+				return JSON.stringify(dest);
+			}
+			// jsonUntil(data);
+
+			$(function() {
+				var arr = [{
+					index: 1,
+					arr2: [{
+							fs: 300,
+							ks: 7001,
+							js: 7050
+						},
+						{
+							fs: 300,
+							ks: 7050,
+							js: 7052
+						},
+						{
+							fs: 300,
+							ks: 7052,
+							js: 7556
+						},
+					]
+				}]
+
+
+				for(var i=0;i<arr.length; i++){
+				      for(var j=0;j<arr[i].arr2.length-1; j++){
+				        if(arr[i].arr2[j].ks>arr[i].arr2[j+1].ks){
+				          if(arr[i].arr2[j].ks<=arr[i].arr2[j+1].js){
+				            console.log('错误')
+				          }
+				        }else if(arr[i].arr2[j].ks<arr[i].arr2[j+1].ks){
+				          console.log(arr[i].arr2[j].js,arr[i].arr2[j+1].ks)
+				          if(arr[i].arr2[j].js>=arr[i].arr2[j+1].ks){
+				            console.log('错误')
+				          }
+				        }else {
+				          console.log('错误')
+				        }
+				      }
+				    }
+				// arr.forEach((e, index) => {
+				// 	e.arr.forEach((n, index) => {
+				// 		console.log(e.arr)
+				// 		if (index <= arr.length - 2) {
+				// 			console.log(e.arr)
+				// 			e.arr.forEach((m, index2) => {
+				// 				console.log(e.arr)
+				// 				if (n.ks > e.arr[index + 1].ks) {
+				// 					if (n.ks <= e.arr[index + 1].js) {
+				// 						console.log('错误')
+				// 					}
+				// 				} else if (n.ks < e.arr[index + 1].ks) {
+				// 					if (n.ks >= e.arr[index + 1].js) {
+				// 						console.log('错误')
+				// 					}
+				// 				} else {
+				// 					console.log('错误')
+				// 				}
+				// 			})
+				// 		}
+				// 	})
+				// })
+			})
+		</script>
+		<script type="text/javascript">
+			alert((!(~+[])+{})[--[~+""][+[]]*[~+[]] + ~~!+[]]+({}+[])[[~!+[]]*~+[]])
+		</script>
+	</body>	
+</html>
